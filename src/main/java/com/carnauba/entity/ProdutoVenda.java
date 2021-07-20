@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.modelmapper.ModelMapper;
+
+import com.carnauba.data.vo.ProdutoVendaVO;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,4 +48,8 @@ public class ProdutoVenda implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_venda")
 	private Venda venda;
+
+	public static ProdutoVenda create(ProdutoVendaVO p) {
+		return new ModelMapper().map(p, ProdutoVenda.class);
+	}
 }

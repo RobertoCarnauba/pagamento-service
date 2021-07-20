@@ -14,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.carnauba.data.vo.VendaVO;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,7 +27,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = " produto_venda")
+@Table(name = "venda")
 @Getter
 @Setter
 @ToString
@@ -37,12 +40,16 @@ public class Venda implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@DateTimeFormat(pattern = "MM/dd/yy")
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	@Column(name = "data", nullable = false)
 	private Date data;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "venda", cascade = CascadeType.REFRESH)
 	private List<ProdutoVenda> produtos;
 	@Column(name = "Valor_total", nullable = false, length = 10)
 	private Double valorTotal;
+	
+	public static Venda create(VendaVO vendaVO) {
+		return new ModelMapper().map(vendaVO, Venda.class);
+	}
 
 }
