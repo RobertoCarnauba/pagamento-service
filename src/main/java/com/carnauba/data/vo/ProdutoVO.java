@@ -32,8 +32,8 @@ public class ProdutoVO extends RepresentationModel<ProdutoVO> implements Seriali
 	@JsonProperty("estoque")
 	private Integer estoque;
 	
-	public static ProdutoVO create (Produto produto) {
-		return new ModelMapper().map(produto, ProdutoVO.class);
+	public static Produto create (ProdutoVO produtoVO) {
+		return new ModelMapper().map(produtoVO, Produto.class);
 	}
 
 }

@@ -2,8 +2,14 @@ package com.carnauba.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.modelmapper.ModelMapper;
+
+import com.carnauba.data.vo.ProdutoVO;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,8 +28,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Produto {
 	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 	@Column(name = "estroque", nullable = false, length = 10)
 	private Integer estoque;
+	
+	public static Produto create(ProdutoVO produtoVO) {
+		return new ModelMapper().map(produtoVO, Produto.class);
+	}
 
 }
